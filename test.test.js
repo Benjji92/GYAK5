@@ -1,6 +1,5 @@
-
-import { TestWatcher } from '@jest/core';
 import {ATM} from './ATM'
+import { APIHandler } from './APIhandler';
 
 describe('tests for the ATM class', () => {
     describe('tests for the constructor and withdraw methods', () => {
@@ -88,4 +87,37 @@ describe('tests for the ATM class', () => {
             });
 
         });
+});
+
+describe('tests for the APIHandler class', () => {
+    let myAPIHandler;
+    beforeEach(() => {
+        myAPIHandler = new APIHandler();
+    });
+    test('it should return a value', () => {
+        myAPIHandler.getUniversities('Finland').then(result => {
+            expect(result).not.toBe(null);
+        });
+    });
+    test('it should return a value', () => {
+        let elte = {
+
+            domains: ["elte.hu"],
+      
+            name: "E\u00f6tv\u00f6s Lorand University",
+      
+            country: "Hungary",
+      
+            alpha_two_code: "HU",
+      
+            "state-province": null,
+      
+            web_pages: ["http://www.elte.hu/"],
+      
+          };
+          myAPIHandler.getUniversities('Hungary').then(result => {
+            expect(result).not.toBe(null);
+            expect(result).arrayContaining(elte);
+        });
+    });
 });
